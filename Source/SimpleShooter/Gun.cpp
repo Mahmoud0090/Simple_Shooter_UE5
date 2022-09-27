@@ -17,7 +17,6 @@ AGun::AGun()
 
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Root);
-
 }
 
 void AGun::PullTrigger()
@@ -44,6 +43,12 @@ void AGun::PullTrigger()
 		FVector ShotDirection = -Rotation.Vector();
 		//DrawDebugPoint(GetWorld() , Hit.Location , 20 , FColor::Red , true);
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),ImpactEffect,Hit.Location , ShotDirection.Rotation());
+		FPointDamageEvent DamageEvent(Damage , Hit , ShotDirection , nullptr);
+		AActor* HitActor = Hit.GetActor();
+		if(HitActor != nullptr)
+		{
+			HitActor->TakeDamage(Damage , DamageEvent , OwnerController , this);
+		}
 	}
 }
 
