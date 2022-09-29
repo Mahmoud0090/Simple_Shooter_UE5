@@ -13,8 +13,15 @@ UCLASS()
 class SIMPLESHOOTER_API AShooterAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+		
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+private:
+    UPROPERTY(EditAnyWhere)
+	float AcceptenceRadius = 200;
 };
